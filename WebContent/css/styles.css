@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #3A5FCD;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.account_input {
+    font-size: 1.2em;
+    width: 50%;
+    margin: 2% 0 1% 0;
+    padding: 0.5%;
+}
+
+input {
+    font-size: 1.2em;
+    width: 40%;
+    margin: 2% 0 1% 0;
+    padding: 0.5%;
+}
+
+#left_frame {
+    float: left;
+    width: 20%;
+}
+
+#center_frame {
+    float: left;
+    width: 60%;
+    text-align: center;
+}
+
+#right_frame {
+    float: left;
+    width: 20%;
+    text-align: right;
+}
+
+#left_frame input, #right_frame input {
+    font-size: 2em;
+    background-color: #87CEFA;
+    color: #FFFFFF;
+    text-align: center;
+    width: 100%;
+    padding: 12px;
+    margin: 8% 0 8% 0;
+}
+
+.not_display {
+    visibility: hidden;
+}
+
+#choose_title {
+    color: #FFFFFF;
+    font-size: 2.5em;
+    text-align: center;
+    margin-top: 1%;
+}
+
+#input_amount {
+    font-size: 1.5em;
+    margin-top: 2%;
+}
+
+p, span, #yellow_font {
+    color: #FFFF00;
+    font-size: 1.1em;
+}
+
+#instructions {
+    font-size: 1.0em;
+    width: 96%;
+}
+
+#left_align_message {
+    text-align: left;
+}
+
+#view_amount {
+    font-size: 1.7em;
+    padding: 100px;
+    letter-spacing: 0.08em;
+}
+
+#login_input {
+    font-size: 1.1em;
+}
