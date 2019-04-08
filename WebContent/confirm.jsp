@@ -1,19 +1,9 @@
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="model.*" %>
-<%@ page import="javax.*" %>
-<%
-    HttpSession s = request.getSession();
-    Account acc = (Account) s.getAttribute("account");
-    if (acc == null) {
-        acc = new Account();
-    }
-    int amount = Integer.parseInt(request.getParameter("amount"));
-    double handlingFee =  Double.parseDouble(String.format("%.2f",amount * 0.001));
-%>
-<
-<c:set var="acc" value="${sessionScope.get('account')}" scope="page"/>
+<c:set var="acc" value="${sessionScope.get('account')}" scope="page" />
+<c:set var="amount" value="${param.get('amount')}" scope="page" />
+<c:set var="handlingFee" value="${amount*0.001}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +17,7 @@
           href="<c:url value="/css/styles.css" />">
     <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
     <script>
-        if (null== <%=acc.getAccountid()%>) {
+        if (""=== '${acc.getAccountid()}') {
             if (alert("当前登录已失效，请重新登录！")) {
                 window.location.href = "login.jsp";
             }
@@ -56,27 +46,27 @@
         <table border="0" align="center" id="view_amount">
             <tr>
                 <td>存款账号：</td>
-                <td><%=acc.getAccountid()%>
+                <td>${acc.getAccountid()}
                 </td>
                 <input type="hidden" name="accountid"
-                       value="<%=acc.getAccountid()%>">
+                       value="${acc.getAccountid()}">
             </tr>
             <tr>
                 <td>存款金额：</td>
-                <td><%=amount%>
+                <td>${amount}
                 </td>
             </tr>
             <tr>
                 <td>手续费：</td>
-                <td><%=handlingFee%>
+                <td>${amount}
                 </td>
             </tr>
             <tr>
                 <td>实际存入金额：</td>
-                <td><%=amount - handlingFee%>
+                <td>${amount-handlingFee}
                 </td>
                 <input type="hidden" name="amount"
-                       value="<%=amount - handlingFee%>">
+                       value="${amount-handlingFee}">
             </tr>
         </table>
     </div>

@@ -1,12 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-    String err = (String) request.getAttribute("err");
-    System.out.println(err);
-%>
+<c:set var="err" value="${requestScope.get('err')}" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +12,9 @@
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
     <link rel="stylesheet" type="text/css"
-          href="<%=path%>/css/styles.css">
-    <script type="text/javascript" src="<%=path%>/js/js.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/jquery-3.3.1.js"></script>
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.js" />"></script>
     <title>过渡页面</title>
 </head>
 <body>
@@ -27,7 +22,7 @@
 <div id="left_frame">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
-    <br/> <input type="button" name="" value="退卡" style="color:red;" onclick="changeFrame('<%=path%>/core.do?action=exit');">
+    <br/> <input type="button" name="" value="退卡" style="color:red;" onclick="changeFrame('<c:url value="/core.do" ><c:param name="action" value="exit" /> </c:url>');">
 </div>
 <div id="center_frame">
     <div id="input_amount">请选择所需服务</div>
@@ -35,8 +30,8 @@
 <div id="right_frame">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
-    <br/> <input type="button" name="" value="返回主菜单" onclick="changeFrame('<%=path%>/index.jsp');">
-</div>
+    <br/> <input type="button" name="" value="返回主菜单" onclick="changeFrame('<c:url value="/index.jsp" />');">
+</div>ac
 </body>
 <script>
     const coreHint = "请选择您要进行的下一步操作。";
@@ -55,7 +50,7 @@
         coreInput.text(code);
     }
     for(let i in hintJson){
-        if (i ==='<%=err %>') {
+        if (i ==='${err}') {
             displayErr(hintJson[i]);
         }
     }

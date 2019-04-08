@@ -1,20 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@ page import="model.*" %>
-<%@ page import="javax.*" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-    String err = (String) request.getAttribute("err");
-%>
-<%
-    HttpSession s = request.getSession();
-    Account acc = (Account) s.getAttribute("account");
-    if (acc == null) {
-        acc = new Account();
-    }
-%>
+<c:set var="acc" value="${sessionScope.get('account')}" scope="page" />
+<c:set var="err" value="${requestScope.get('err')}" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,12 +12,13 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
-    <link rel="stylesheet" type="text/css" href="<%=path%>/css/styles.css">
-    <script type="text/javascript" src="<%=path%>/js/js.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.js" />"></script>
     <script>
         let b1 = true;
-        if (null==<%=acc.getAccountid()%>) {
+        if (""=="${acc.getAccountid()}") {
             alert("当前登录已失效，请重新登录！");
             window.location.href = "login.jsp";
         }
@@ -49,11 +38,12 @@
         window.onload = function () {
             for (let i = 0; i < document.getElementsByClassName('b1').length; i++) {
                 document.getElementsByClassName('b1')[i].onclick = function () {
+                    console.log("click");
                     document.getElementById('text1').value = this.value;
                     resets();
                 }
             }
-            if ('250'==='<%=err %>') {
+            if ('250'==='${err}') {
                 let x = document.getElementById("err");
                 x.style.display = "block";
             }
@@ -91,13 +81,13 @@
         <br/>
         <input class="b1" type="button" name="" value="1000">
         <br/>
-        <input type="button" name="" value="返回" onclick="changeFrame('<%=path %>/index.jsp')">
+        <input type="button" name="" value="返回" onclick="changeFrame('<c:url value="/index.jsp"/>')">
     </div>
     <div id="center_frame">
         <div>
             <div id="input_amount">
                 请选择或输入取款金额<br/>
-                <input type="hidden" name="accountid" value="<%=acc.getAccountid() %>">
+                <input type="hidden" name="accountid" value="${acc.getAccountid()}">
                 <input type="text" id="text1" name="amount" value="">
             </div>
             <p>
@@ -144,7 +134,7 @@
         <input class="b1" type="button" name="" value="5000">
         <br/>
         <input type="button" name="" value="确定" style="color:green;"
-               onclick="frmSubmit('<%=path %>/core.do?action=draw')">
+               onclick="frmSubmit('<c:url value="/core.do"><c:param name="action" value="draw"/></c:url>')">
     </div>
     <div style="text-align:center"><p id="err" style="display:none;color:red">当前余额不足。</p></div>
     <div style="text-align:center"><p id="err1" style="display:none;color:red">请不要输入空值或非100的倍数。</p></div>

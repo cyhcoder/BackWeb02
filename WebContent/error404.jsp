@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +10,8 @@
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
     <link rel="stylesheet" type="text/css"
-          href="<%=path%>/css/styles.css">
-    <script type="text/javascript" src="<%=path%>/js/js.js"></script>
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
     <title>页面丢失<</title>
 </head>
 <body>
@@ -30,7 +25,7 @@
 <div id="right_frame">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
     <br/> <input type="button" name="" value="隐藏" class="not_display">
-    <br/> <input type="button" name="" value="返回主菜单" onclick="changeFrame('<%=path%>/index.jsp');">
+    <br/> <input type="button" name="" value="返回主菜单" onclick="changeFrame('<c:url value="/index.jsp" />');">
 </div>
 </body>
 </html>

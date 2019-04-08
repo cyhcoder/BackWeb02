@@ -1,22 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@ page import="model.*" %>
-<%@ page import="javax.*" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
-<%
-    boolean loginOk = true;
-    HttpSession s = request.getSession();
-    Account acc = (Account) s.getAttribute("account");
-    if (acc == null) {
-        acc = new Account();
-        loginOk = false;
-    }
-
-%>
+<c:set var="acc" value="${sessionScope.get('account')}" scope="page" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,15 +11,16 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
-    <link rel="stylesheet" type="text/css" href="<%=path %>/css/styles.css">
-    <script type="text/javascript" src="<%=path %>/js/js.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
     <title>主页</title>
     <script>
         function changeFrame1(dir) {
-            if (false===<%=loginOk %>){
+            if ('${acc}'===''){
                 firm();
-            }else{
-                window.location.href = '<%=path %>' + dir;
+            }else {
+                window.location.href = '<c:url value="/" />' + dir;
             }
         }
     </script>

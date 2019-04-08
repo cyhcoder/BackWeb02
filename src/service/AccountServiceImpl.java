@@ -162,7 +162,9 @@ public class AccountServiceImpl implements IAccountService {
                 throw new Exception("250");
             }
             // 判断是否存在目标用户
+            System.out.println("aaa");
             Account accB = aDAO.findAccountByID(b.getAccountid());
+            System.out.println(accB);
             if (accB == null) {
                 throw new Exception("抱歉！不存在用户" + b.getAccountid());
             }

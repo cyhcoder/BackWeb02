@@ -1,19 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@ page import="model.*" %>
-<%@ page import="javax.*" %>
-<%@ page import="java.util.ArrayList" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
-<%
-    ArrayList<AccountDetailDTO> al = (ArrayList<AccountDetailDTO>) request.getAttribute("arraylist");
-    if(al==null){
-        al = new ArrayList<AccountDetailDTO>();
-    }
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="al" value="${requestScope.get('arraylist')}" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,10 +12,10 @@
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
     <link rel="stylesheet" type="text/css"
-          href="<%=path%>/css/styles.css">
-    <script type="text/javascript" src="<%=path%>/js/js.js"></script>
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
     <script>
-        if (0===<%=al.size()%>){
+        if ("" ==="${al.size()}") {
             alert("当前登录已失效，请重新登录！")
             window.location.href = "login.jsp";
         }
@@ -44,7 +32,7 @@
     <br/>
     <input type="button" name="" value="隐藏" class="not_display">
     <br/>
-    <input type="button" name='' value='返回' onclick="changeFrame('<%=path%>/queryRemainder.jsp')">
+    <input type="button" name='' value='返回' onclick="changeFrame('<c:url value="/queryRemainder.jsp"/>')">
 </div>
 <div id="center_frame">
     <div id="input_amount">
@@ -58,20 +46,36 @@
             <td>交易金额</td>
             <td>余额</td>
         </tr>
-        <%for (int i = 0; i < al.size() && i < 5; i++) { %>
-        <tr>
-            <td><%=al.get(i).getCreateTime() %>
-            </td>
-            <td><%=al.get(i).getType() %>
-            </td>
-            <td><%=al.get(i).getName2() %>
-            </td>
-            <td><%=al.get(i).getAmount() %>
-            </td>
-            <td><%=al.get(i).getBalance()%>
-            </td>
-        </tr>
-        <%} %>
+        <%--<%for (int i = 0; i < al.size() && i < 5; i++) { %>--%>
+        <%--<tr>--%>
+        <%--<td><%=al.get(i).getCreateTime() %>--%>
+        <%--</td>--%>
+        <%--<td><%=al.get(i).getType() %>--%>
+        <%--</td>--%>
+        <%--<td><%=al.get(i).getName2() %>--%>
+        <%--</td>--%>
+        <%--<td><%=al.get(i).getAmount() %>--%>
+        <%--</td>--%>
+        <%--<td><%=al.get(i).getBalance()%>--%>
+        <%--</td>--%>
+        <%--</tr>--%>
+        <%--<%} %>--%>
+        <c:forEach items="${al}" var="item" varStatus="i">
+            <c:if test="${i.index<5}">
+                <tr>
+                    <td>${al.get(i.index).getCreateTime() }
+                    </td>
+                    <td>${al.get(i.index).getType() }
+                    </td>
+                    <td>${al.get(i.index).getName2() }
+                    </td>
+                    <td>${al.get(i.index).getAmount() }
+                    </td>
+                    <td>${al.get(i.index).getBalance() }
+                    </td>
+                </tr>
+            </c:if>
+        </c:forEach>
     </table>
 </div>
 
@@ -83,7 +87,7 @@
     <br/>
     <input type="button" name="" value="隐藏" class="not_display">
     <br/>
-    <input type="button" name='' value='继续交易' onclick="changeFrame('<%=path%>/index.jsp')">
+    <input type="button" name='' value='继续交易' onclick="changeFrame('<c:url value="/index.jsp"/>')">
 </div>
 </body>
 </html>

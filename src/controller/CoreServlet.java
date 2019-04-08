@@ -121,6 +121,7 @@ public class CoreServlet extends HttpServlet {
             accountid2 = request.getParameter("accountid2");
             amount = Double.parseDouble(request.getParameter("amount"));
             AccountDetailDTO aDTO = new AccountDetailDTO();
+
             aDTO.setAccountid(accountid);
             aDTO.setAmount(amount);
             try {

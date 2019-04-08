@@ -1,14 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@ page import="model.*" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-%>
-<%
-    String err = (String) request.getAttribute("err");
-%>
+<c:set var="err" value="${requestScope.get('err')}" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,9 +11,10 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
-    <link rel="stylesheet" type="text/css" href="<%=path %>/css/styles.css">
-    <script type="text/javascript" src="<%=path %>/js/js.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.js" />"></script>
     <title>登录用户</title>
     <script type="text/javascript">
         function frmSubmit(url) {
@@ -29,7 +23,7 @@
         }
 
         $(function () {
-            if ('101' ==='<%=err %>') {
+            if ('101' ==='${err}') {
                 $('#err').css({"display":"block"});
             }
             $("#input_amount").children("input").on("focus",function () {
@@ -56,7 +50,7 @@
         <br/> <input type="button" name="" value="隐藏" class="not_display">
         <br/> <input type="button" name="" value="隐藏" class="not_display">
         <br/> <input type="button" name='' value='确认' style="color: green;"
-                     onclick="frmSubmit('<%=path%>/core.do?action=login')">
+                     onclick="frmSubmit('<c:url value="/core.do"><c:param name="action" value="login" /></c:url>')">
     </div>
 </form>
 <div style="text-align:center"><p id="err" style="display:none;color:red">用户名或密码错误，请重新登录。</p></div>

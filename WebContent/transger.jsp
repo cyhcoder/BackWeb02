@@ -1,20 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
-<%@ page import="model.*" %>
-<%@ page import="javax.*" %>
-<%
-    String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-            + path + "/";
-    String err = (String) request.getAttribute("err");
-%>
-<%
-    HttpSession s = request.getSession();
-    Account acc = (Account) s.getAttribute("account");
-    if (acc == null) {
-        acc = new Account();
-    }
-%>
+<c:set var="acc" value="${sessionScope.get('account')}" scope="page" />
+<c:set var="err" value="${requestScope.get('err')}" scope="page"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +13,11 @@
     <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
     <meta http-equiv="description" content="This is my page">
     <link rel="stylesheet" type="text/css"
-          href="<%=path%>/css/styles.css">
-    <script type="text/javascript" src="<%=path%>/js/js.js"></script>
-    <script type="text/javascript" src="<%=path%>/js/jquery-3.3.1.js"></script>
+          href="<c:url value="/css/styles.css" />">
+    <script type="text/javascript" src="<c:url value="/js/js.js" />"></script>
+    <script type="text/javascript" src="<c:url value="/js/jquery-3.3.1.js" />"></script>
     <script>
-        if (null ===<%=acc.getAccountid()%>) {
+        if ("" ==="${acc.getAccountid()}") {
             alert("当前登录已失效，请重新登录！");
             window.location.href = "login.jsp";
         }
@@ -44,13 +32,13 @@
         <br/> <input type="button" name="" value="隐藏" class="not_display">
         <br/> <input type="button" name="" value="隐藏" class="not_display">
         <br/> <input type="button" name="" value="取消" style="color: red;"
-                     onclick="changeFrame('<%=path %>/index.jsp')">
+                     onclick="changeFrame('<c:url value="/index.jsp" />')">
     </div>
     <div id="center_frame">
         <div>
             <div id="input_amount">
                 确定无误后，请按确定键<br> 转入账号：
-                <input type="hidden" name="accountid" value="<%=acc.getAccountid() %>">
+                <input type="hidden" name="accountid" value="${acc.getAccountid() }">
                 <input type="text" id="atid" class="account_input" name="accountid2" value="">
                 <br/> 转入金额：
                 <input type="text" id="amount" class="account_input" name="amount" value=""><br/>
@@ -96,7 +84,7 @@
         <br/> <input type="button" name="" value="隐藏" class="not_display">
         <br/> <input type="button" name="" value="更正" style="color: red;">
         <br/> <input type="button" name="" value="确认" style="color: green;"
-                     onclick="frmSubmit('<%=path %>/core.do?action=transger')">
+                     onclick="frmSubmit('<c:url value="/core.do"><c:param name="action" value="transger" /> </c:url>')">
     </div>
 </form>
 <div>
@@ -139,7 +127,7 @@
         err.css({"display": "block"});
     }
     for(let i in errJson){
-        if (i ==='<%=err %>') {
+        if (i ==='${err}') {
             displayErr(errJson[i]);
         }
     }
